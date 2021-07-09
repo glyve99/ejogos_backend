@@ -1,0 +1,11 @@
+{
+    "name": "trilha-backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "repository": "https://github.com/glyve99/grupo2_backend.git",
+    "author": "caiotaavares <caio_s.tavares2@hotmail.com>",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
