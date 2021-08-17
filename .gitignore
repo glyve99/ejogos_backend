@@ -1,1 +1,8 @@
 /node_modules
+/Lembrar.txt
+package-Lock.json
+
+/uploads/*
+!/uploads/.gitkeep
+
+.env
