@@ -8,8 +8,8 @@ class Product extends Model {
             price: DataTypes.FLOAT,
             description: DataTypes.TEXT,
             image_uri: DataTypes.STRING,
-            category: DataTypes.ENUM(Object.values(CategoriesEnum)),
             id_brand: DataTypes.STRING,
+            id_categories: DataTypes.STRING,
             created_at: DataTypes.DATE,
         }, {
             sequelize: connection
