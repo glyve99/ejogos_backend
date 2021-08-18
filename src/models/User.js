@@ -7,12 +7,15 @@ class User extends Model {
             email: DataTypes.STRING,
             password: DataTypes.STRING,
             cpf: DataTypes.STRING(14),
-            zip_code: DataTypes.STRING(9),
+            id_addresses: DataTypes.STRING,
             is_admin: DataTypes.TINYINT,
             created_at: DataTypes.DATE,
         }, {
             sequelize: connection
         })
+    }
+    static associate(models) {
+        this.hasMany(models.Address, {foreignKey: 'id_addresses', as: 'adresses'})
     }
 }
 
