@@ -33,7 +33,7 @@ module.exports = {
     if (hasNull(req.body, ['name', 'email', 'password']))
       return res.status(400).send({ msg: 'missing required data' });
 
-    const { name, email, password, zip_code, cpf } = req.body;
+    const { name, email, password, id_addresses ,cpf} = req.body;
 
     try {
       const userExists = await User.findAll({
@@ -48,7 +48,7 @@ module.exports = {
       if (userExists.length > 0)
         return res.status(400).send({ msg: 'invalid data' });
 
-      const result = await User.create({ name, email, password: await generateHash(password), zip_code, cpf });
+      const result = await User.create({ name, email, password: await generateHash(password), id_addresses, cpf });
 
       result.password = undefined;
 
@@ -60,8 +60,8 @@ module.exports = {
   },
 
   async list(req, res) {
-    if (!req.isAdmin)
-      return res.status(403).send({ msg: 'forbidden' });
+    // if (!req.isAdmin)
+    //   return res.status(403).send({ msg: 'forbidden' });
 
     try {
       const result = await User.findAll({
@@ -112,11 +112,11 @@ module.exports = {
   },
 
   async delete(req, res) {
-    if (req.isAdmin)
-      return res.status(403).send({ msg: 'admin can not deleted herself' });
+    //if (req.isAdmin)
+      //return res.status(403).send({ msg: 'admin can not deleted herself' });
 
     try {
-      const user = await User.findByPk(req.id);
+      const user = await User.findByPk(req.params.id_user);
 
       if (!user)
         return res.status(404).send({ msg: 'not found' });

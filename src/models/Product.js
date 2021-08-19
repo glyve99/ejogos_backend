@@ -18,6 +18,7 @@ class Product extends Model {
 
     static associate(module) {
         this.belongsTo(module.Brand, {foreignKey: 'id_brand', as: 'brand'})
+        this.belongsTo(module.Category, {foreignKey:'id_categories', as:'category'})
     }
 }
 

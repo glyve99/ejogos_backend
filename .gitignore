@@ -1,7 +1,8 @@
 /node_modules
 /Lembrar.txt
 package-Lock.json
-
+/src/config.js
+/src/database.js
 /uploads/*
 !/uploads/.gitkeep
 

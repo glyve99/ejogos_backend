@@ -6,8 +6,8 @@ class User extends Model {
             name: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING,
-            cpf: DataTypes.STRING(14),
-            id_addresses: DataTypes.STRING,
+            id_addresses: DataTypes.INTEGER,
+            cpf: DataTypes.STRING(14),            
             is_admin: DataTypes.TINYINT,
             created_at: DataTypes.DATE,
         }, {
