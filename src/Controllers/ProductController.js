@@ -7,17 +7,17 @@ const { hasNull } = require('../utils/hasNull');
 
 module.exports = {
     async save(req, res) {
-        if (!req.isAdmin) {
-            if (req.file)
-                deleteFile(req.file.key);
-            return res.status(403).send({ msg: 'forbidden' });
-        }
+        // if (!req.isAdmin) {
+        //     if (req.file)
+        //         deleteFile(req.file.key);
+        //     return res.status(403).send({ msg: 'forbidden' });
+        // }
     
-        if (hasNull(req.body, ['id_brand', 'name', 'price', 'category'])) {
-            if (req.file)
-                deleteFile(req.file.key);
-            return res.status(400).send({ msg: 'missing required data' });
-        }
+        // if (hasNull(req.body, ['id_brand', 'name', 'price', 'id_categories'])) {
+        //     if (req.file)
+        //         deleteFile(req.file.key);
+        //     return res.status(400).send({ msg: 'missing required data' });
+        // }
     
         const { name, price, description, image_uri, id_brand, id_categories } = req.body;
     
@@ -41,9 +41,9 @@ module.exports = {
                 id_brand
             });
             else
-            product = await Product.create({ name, price, description, category, id_brand })
+            product = await Product.create({ name, price, description, image_uri, id_brand, id_categories })
     
-    
+     
             return res.status(200).send(product)
     
             } catch (error) {
@@ -53,40 +53,47 @@ module.exports = {
             return res.status(500).send({ msg: 'internal server error' });
             }
         },
+
+
+
     async list(req, res) {
+        const result = await Product.findAll();
+        return res.status(200).send(result);
+        //  if(hasNull(req. , ['limit', 'page']))
+        //      return res.status(400).send({ msg: 'missing required data' });
 
-        if(hasNull(req.query, ['limit', 'page']))
-            return res.status(400).send({ msg: 'missing required data' });
+        // const { id_brand, id_categories, limit, page } = req.query;
 
-        const { id_brand, category, limit, page } = req.query;
+        // let query = {
+        //     where: {},
+        //     limit: parseInt(limit),
+        //     offset: (page - 1) * limit,
+        //     include: { association: 'brand' }
+        // };
 
-        let query = {
-            where: {},
-            limit: parseInt(limit),
-            offset: (page - 1) * limit,
-            include: { association: 'brand' }
-        };
+        // if (id_brand)
+        //     query.where.id_brand = parseInt(id_brand);
 
-        if (id_brand)
-            query.where.id_brand = parseInt(id_brand);
+        // if (id_categories)
+        //     query.where.id_categories = parseInt(id_categories);
 
-        if (category)
-            query.where.category = category;
+        // try {
+        //     console.log(query);
+        //     const products = await Product.findAll(query);
 
-        try {
-            console.log(query);
-            const products = await Product.findAll(query);
+        //     if (products.length === 0)
+        //         return res.status(404).send({ msg: 'not found' });
 
-            if (products.length === 0)
-                return res.status(404).send({ msg: 'not found' });
-
-            return res.status(200).send(products);
+        //     return res.status(200).send(products);
             
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send({ msg: 'internal server error' });
-        }
+        // } catch (error) {
+        //     console.log(error);
+        //     return res.status(500).send({ msg: 'internal server error' });
+        // }
     },
+
+
+    
     async edit(req, res) {
         
         if (hasNull(req.params, ['id_product'])) {
@@ -97,7 +104,7 @@ module.exports = {
       
           const { id_product } = req.params;
       
-          const { name, price, description, category, id_brand } = req.body;
+          const { name, price, description, id_categories, id_brand } = req.body;
       
           try {
             const product = await Product.findByPk(id_product);
@@ -128,12 +135,12 @@ module.exports = {
                 price,
                 description,
                 image_uri: `${process.env.API_URL}/images/${req.file.key}`,
-                category,
-                id_brand
+                id_brand,
+                id_categories
               });
             }
             else
-              await product.update({ name, price, description, category, id_brand });
+              await product.update({ name, price, description, id_brand, id_categories });
       
             return res.status(200).send(product);
       
@@ -144,15 +151,14 @@ module.exports = {
             return res.status(500).send({ msg: 'internal server error' });
           }
     },
+
+
     async delete(req, res) {
         if (hasNull(req.params, ['id_product'])) {
             return res.status(400).send({ msg: 'missing required data' });
           }
-
-        const {id_product} = req.params;
-
         try {
-            const product = await Product.findByPk(id_product);
+            const product = await Product.findByPk(req.params.id_product);
 
             if(!product)
                 return res.status(404).send({ msg: 'not found' });
