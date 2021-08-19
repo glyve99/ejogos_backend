@@ -16,9 +16,9 @@ routes.get('/', (req, res) => {
 
 routes.post('/login', UserController.login);
 routes.post('/users', UserController.save);
-routes.get('/users', authMiddleware, UserController.list);
+routes.get('/users', UserController.list);
 routes.put('/users/:id_user', authMiddleware, UserController.edit);
-routes.delete('/users/:id_user', authMiddleware, UserController.delete);
+routes.delete('/users/:id_user',  UserController.delete);
 
 routes.post('/products', authMiddleware, ProductController.save);
 routes.get('/products', ProductController.list);
@@ -31,8 +31,9 @@ routes.put('/brands/:id_brands', authMiddleware, BrandController.edit);
 routes.delete('/brands/:id_brands', authMiddleware, BrandController.delete);
 
 routes.post('/address', AddressController.save);
+routes.get('/address', AddressController.list);
 
-routes.post('/categories', CategoryController.save)
-
+routes.post('/categories', CategoryController.save);
+routes.get('/categories', CategoryController.list);
 
 module.exports = routes;

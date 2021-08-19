@@ -60,8 +60,8 @@ module.exports = {
   },
 
   async list(req, res) {
-    if (!req.isAdmin)
-      return res.status(403).send({ msg: 'forbidden' });
+    // if (!req.isAdmin)
+    //   return res.status(403).send({ msg: 'forbidden' });
 
     try {
       const result = await User.findAll({
@@ -112,11 +112,11 @@ module.exports = {
   },
 
   async delete(req, res) {
-    if (req.isAdmin)
-      return res.status(403).send({ msg: 'admin can not deleted herself' });
+    //if (req.isAdmin)
+      //return res.status(403).send({ msg: 'admin can not deleted herself' });
 
     try {
-      const user = await User.findByPk(req.id);
+      const user = await User.findByPk(req.params.id_user);
 
       if (!user)
         return res.status(404).send({ msg: 'not found' });
