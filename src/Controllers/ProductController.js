@@ -19,7 +19,7 @@ module.exports = {
             return res.status(400).send({ msg: 'missing required data' });
         }
     
-        const { name, price, description, category, id_brand } = req.body;
+        const { name, price, description, image_uri, id_brand, id_categories } = req.body;
     
         try {
           const brand = await Brand.findByPk(id_brand);

@@ -5,6 +5,8 @@ const multer = require('multer');
 const UserController = require('./Controllers/UserController');
 const ProductController = require('./Controllers/ProductController');
 const BrandController = require('./Controllers/BrandController');
+const CategoryController = require('./Controllers/CategoryController');
+const AddressController = require('./Controllers/AddressController');
 
 const authMiddleware = require('./middlewares/auth');
 
@@ -27,5 +29,10 @@ routes.post('/brands', authMiddleware, BrandController.save);
 routes.get('/brands', BrandController.list);
 routes.put('/brands/:id_brands', authMiddleware, BrandController.edit);
 routes.delete('/brands/:id_brands', authMiddleware, BrandController.delete);
+
+routes.post('/address', AddressController.save);
+
+routes.post('/categories', CategoryController.save)
+
 
 module.exports = routes;

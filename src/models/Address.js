@@ -4,7 +4,6 @@ class Address extends Model {
   static init(connection) {
     super.init(
       {
-        name: DataTypes.STRING,
         zip_code: DataTypes.STRING,
         street: DataTypes.STRING,
         number: DataTypes.INTEGER,
