@@ -32,8 +32,12 @@ routes.delete('/brands/:id_brands', authMiddleware, BrandController.delete);
 
 routes.post('/address', AddressController.save);
 routes.get('/address', AddressController.list);
+routes.put('/address/:id_address', authMiddleware, AddressController.edit);
+routes.delete('/address/id_address', AddressController.delete);
 
-routes.post('/categories', CategoryController.save);
-routes.get('/categories', CategoryController.list);
+routes.post('/category', CategoryController.save);
+routes.get('/category', CategoryController.list);
+routes.put('/category/:id_category', authMiddleware, CategoryController.edit);
+routes.delete('/category/id_category', CategoryController.delete);
 
 module.exports = routes;
