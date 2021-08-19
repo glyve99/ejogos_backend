@@ -61,9 +61,9 @@ module.exports = {
         //return res.status(403).send({ msg: 'admin can not deleted herself' });
   
       try {
-        const category = await Category.findByPk(req.params.id_cateogory);
+        const category = await Category.findByPk(req.params.id_category);
   
-        if (!user)
+        if (!category)
           return res.status(404).send({ msg: 'not found' });
   
         await category.destroy()

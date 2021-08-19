@@ -1,4 +1,5 @@
 const Address = require('../models/Address');
+const User = require('../models/User');
 const { hasNull } = require('../utils/hasNull');
 
 module.exports = {
@@ -43,14 +44,14 @@ module.exports = {
       // return res.status(400).send({ msg: 'missing required data' });
           
       const {id_address} = req.params
-      const {name} = req.body;
+      const {zip_code, street, number, state, city} = req.body;
       try {
-      const address = await Category.findByPk(id_address);
+      const address = await Address.findByPk(id_address);
 
       if(!address)
           return res.status(404).send({ msg: 'not found' });
 
-      await address.update({ name });
+      await address.update({ zip_code, street, number, state, city});
         
       return res.status(200).send(address);
           
@@ -66,8 +67,8 @@ module.exports = {
   
       try {
         const address = await Address.findByPk(req.params.id_address);
-  
-        if (!user)
+      
+        if (!address)
           return res.status(404).send({ msg: 'not found' });
   
         await address.destroy()

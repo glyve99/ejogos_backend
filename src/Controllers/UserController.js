@@ -80,10 +80,10 @@ module.exports = {
   },
 
   async edit(req, res) {
-    const { name, zip_code, cpf } = req.body;
+    const {name, email, id_addresses, cpf  } = req.body;
 
     try {
-      const user = await User.findByPk(req.id);
+      const user = await User.findByPk(req.params.id_user);
 
       if (!user)
         return res.status(404).send({ msg: 'not found' });
@@ -97,10 +97,10 @@ module.exports = {
         if (!(await validPassword(oldPassword, user.password)))
           return res.status(400).send({ msg: 'password is invalid' });
 
-        await user.update({ name, zip_code, cpf, password: await generateHash(password) });
+        await user.update({ name, email, password: await generateHash(password), id_addresses, cpf });
       }
       else
-        await user.update({ name, zip_code, cpf });
+        await user.update({ name, email, id_addresses, cpf  });
 
       user.password = undefined;
 
