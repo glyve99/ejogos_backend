@@ -57,38 +57,39 @@ module.exports = {
 
 
     async list(req, res) {
+        const result = await Product.findAll();
+        return res.status(200).send(result);
+        //  if(hasNull(req. , ['limit', 'page']))
+        //      return res.status(400).send({ msg: 'missing required data' });
 
-         if(hasNull(req.query, ['limit', 'page']))
-             return res.status(400).send({ msg: 'missing required data' });
+        // const { id_brand, id_categories, limit, page } = req.query;
 
-        const { id_brand, id_categories, limit, page } = req.query;
+        // let query = {
+        //     where: {},
+        //     limit: parseInt(limit),
+        //     offset: (page - 1) * limit,
+        //     include: { association: 'brand' }
+        // };
 
-        let query = {
-            where: {},
-            limit: parseInt(limit),
-            offset: (page - 1) * limit,
-            include: { association: 'brand' }
-        };
+        // if (id_brand)
+        //     query.where.id_brand = parseInt(id_brand);
 
-        if (id_brand)
-            query.where.id_brand = parseInt(id_brand);
+        // if (id_categories)
+        //     query.where.id_categories = parseInt(id_categories);
 
-        if (id_categories)
-            query.where.id_categories = parseInt(id_categories);
+        // try {
+        //     console.log(query);
+        //     const products = await Product.findAll(query);
 
-        try {
-            console.log(query);
-            const products = await Product.findAll(query);
+        //     if (products.length === 0)
+        //         return res.status(404).send({ msg: 'not found' });
 
-            if (products.length === 0)
-                return res.status(404).send({ msg: 'not found' });
-
-            return res.status(200).send(products);
+        //     return res.status(200).send(products);
             
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send({ msg: 'internal server error' });
-        }
+        // } catch (error) {
+        //     console.log(error);
+        //     return res.status(500).send({ msg: 'internal server error' });
+        // }
     },
 
 
